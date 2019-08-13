@@ -30,7 +30,12 @@
     if($result){
         while($row = mysqli_fetch_array($result)){
             $name = $row["$yourfield"];
+            $idade = $row["idade"];
+            $email = $row["email"];
+
             echo "Nome: ".$name."<br/>";
+            echo "Idade: ".$idade."<br/>";
+            echo "E-mail: ".$email."<br/>";
         }
     }
  ?>
