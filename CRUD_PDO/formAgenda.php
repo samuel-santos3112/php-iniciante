@@ -86,68 +86,101 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
         <title>Agenda de contatos</title>
     </head>
     <body>
-        <form action="?act=save" method="POST" name="form1">
-            <h1>Agenda de contatos</h1>
-            <hr>
-            <input type="hidden" name="id" <?php 
-            if (isset($id) && $id != null || $id != ""){
-                echo "value=\"{$id}\"";
-            }
-            ?>/>
-            Nome:
-            <input type="text" name="nome" <?php 
-            if (isset($nome) && $nome != null || $nome != ""){
-                echo "value=\"{$nome}\"";
-            }
-            ?>/>
-            E-mail:
-            <input type="text" name="email"<?php 
-            if (isset($email) && $email != null || $email != ""){
-                echo "value=\"{$email}\"";
-            }
-            ?>/>
-            Celular:
-            <input type="text" name="celular" <?php 
-            if (isset($celular) && $celular != null || $celular != ""){
-                echo "value=\"{$celular}\"";
-            }
-            ?>/>
-            <input type="submit" value="Salvar"/>
-            <input type="reset" value="Limpar">
-            <hr>
-        </form>
-        <table border="1" width="100%" >
-            <tr>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Celular</th>
-                <th>Ações</th>
-            </tr>
-            <?php
-                try {
-                    $stmt = $conexao->prepare("SELECT * FROM contatos");
-                    if ($stmt->execute()) {
-                        while($resultSet = $stmt->fetch(PDO::FETCH_OBJ)){
-                            echo "<tr>";
-                            echo "<td>".$resultSet->nome."</td><td>".$resultSet->email."</td><td>".$resultSet->celular
-                                ."</td><td><center><a href=\"?act=update&id=" . $resultSet->id . "\">[Alterar]</a>"
-                                ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-                                ."<a href=\"?act=delete&id=" .$resultSet->id . "\">[Excluir]</a></center></td>";
-                            echo "</tr>";
-                            
-                            
+        <div class="container-fluid">
+            <form action="?act=save" method="POST" name="form1">
+                
+                <h1>Agenda de contatos</h1>
+                <hr>
+                <div class="form-group">
+                <div class="container" >    
+                    <div class="form-row">
+                        <input type="hidden" name="id"  <?php 
+                        if (isset($id) && $id != null || $id != ""){
+                            echo "value=\"{$id}\"";
                         }
-                    }else {
-                        echo "Erro: Não foi possível recuperar os dados do banco de dados";
-                    }
-                }catch(PDOException $erro){
-                    echo "Erro: ".$erro->getMessage();
-                }?>
-        </table>
+                        ?>/>
+                        
+                            <div class="form-column">
+                                <input type="text" name="nome" placeholder="Nome" style="width: 15cm" class="form-control" <?php 
+                                if (isset($nome) && $nome != null || $nome != ""){
+                                    echo "value=\"{$nome}\"";
+                                }
+                                ?>/>
+                                
+                                <input type="text" name="email" placeholder="E-mail" style="width: 15cm"  class="form-control"<?php 
+                                if (isset($email) && $email != null || $email != ""){
+                                    echo "value=\"{$email}\"";
+                                }
+                                ?>/>
+                            
+                                <input type="text" name="celular" placeholder="Celular" style="width: 8cm"  class="form-control" <?php 
+                                if (isset($celular) && $celular != null || $celular != ""){
+                                    echo "value=\"{$celular}\"";
+                                }
+                                ?>/>
+                            </div>
+                        
+                    </div>
+                  
+                    <br> 
+                    <div class="form-row">   
+                        <input type="submit" class="btn btn-primary" value="Salvar"/>
+                            &nbsp;
+                        <input type="reset" class="btn btn-primary" value="Limpar">
+                    </div>
+                </div>    
+                </div>
+                <hr>
+            </form>
+        </div>
+        <div class="container" style="widht: 10">    
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered" >
+                    <tr>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Celular</th>
+                        <th>Ações</th>
+                    </tr>
+                    <?php
+                        try {
+                            $stmt = $conexao->prepare("SELECT * FROM contatos");
+                            if ($stmt->execute()) {
+                                while($resultSet = $stmt->fetch(PDO::FETCH_OBJ)){
+                                    echo "<tr>";
+                                    echo "<td>".$resultSet->nome."</td><td>".$resultSet->email."</td><td>".$resultSet->celular
+                                        ."</td><td><center><a class=\"btn btn-primary btn-md\" href=\"?act=update&id=" . $resultSet->id . "\">Alterar</a>"
+                                        ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                                        ."<a class=\"btn btn-primary btn-md\" href=\"?act=delete&id=" .$resultSet->id . "\">Excluir</a></center></td>";
+                                    echo "</tr>";
+                                    
+                                    
+                                }
+                            }else {
+                                echo "Erro: Não foi possível recuperar os dados do banco de dados";
+                            }
+                        }catch(PDOException $erro){
+                            echo "Erro: ".$erro->getMessage();
+                        }?>
+                </table>
+            </div>
+        </div>    
+        <style>
+        h1{
+             text-align:center
+        }
+        </style>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
 </html>
 
