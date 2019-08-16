@@ -83,9 +83,13 @@
  }
 ?>
 
+
+
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="toastify.js">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -93,13 +97,14 @@
         <title>Agenda de contatos</title>
     </head>
     <body>
+    <a class="click-action" ng-click="simpleAutoclose()"></a>
         <div class="container-fluid">
             <form action="?act=save" method="POST" name="form1">
                 
                 <h1>Agenda de contatos</h1>
                 <hr>
                 <div class="form-group">
-                <div class="container" >    
+                   
                     <div class="form-row">
                         <input type="hidden" name="id"  <?php 
                         if (isset($id) && $id != null || $id != ""){
@@ -135,7 +140,7 @@
                             &nbsp;
                         <input type="reset" class="btn btn-primary" value="Limpar">
                     </div>
-                </div>    
+                  
                 </div>
                 <hr>
             </form>
@@ -158,10 +163,8 @@
                                     echo "<td>".$resultSet->nome."</td><td>".$resultSet->email."</td><td>".$resultSet->celular
                                         ."</td><td><center><a class=\"btn btn-primary btn-md\" href=\"?act=update&id=" . $resultSet->id . "\">Alterar</a>"
                                         ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-                                        ."<a class=\"btn btn-primary btn-md\" href=\"?act=delete&id=" .$resultSet->id . "\">Excluir</a></center></td>";
+                                        ."<a onclick=\"excluir_registro(event);\" class=\"btn btn-primary btn-md\" href=\"?act=delete&id=" .$resultSet->id . "\">Excluir</a></center></td>";
                                     echo "</tr>";
-                                    
-                                    
                                 }
                             }else {
                                 echo "Erro: Não foi possível recuperar os dados do banco de dados";
@@ -177,10 +180,15 @@
              text-align:center
         }
         </style>
-
+  
+        <script src="main2.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="main.js"></script>
+        <script src="toastify.min.js"></script>
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
     </body>
 </html>
 
